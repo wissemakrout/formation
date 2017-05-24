@@ -1,3 +1,7 @@
+import { SharedModule } from './../../shared/shared.module';
+import { FormationRoutingModule } from './../formation-routing.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormationFormComponent } from './formation-form.component';
@@ -8,9 +12,14 @@ describe('FormationFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormationFormComponent ]
+      imports: [CommonModule,
+        FormationRoutingModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule],
+      declarations: [FormationFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

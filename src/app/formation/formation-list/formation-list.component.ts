@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormationService } from '../../shared/services/formation.service';
 import { Formation } from '../../shared/models/formation';
 
@@ -9,22 +9,17 @@ import { Formation } from '../../shared/models/formation';
 })
 export class FormationListComponent implements OnInit {
 
-  formations: Array<Formation> = [];
-  formation: Formation;
+  @Input() formations: Array<Formation> = [];
+  @Output() onDelete = new EventEmitter();
 
-  constructor(private formationService: FormationService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.fetch();
+
   }
 
   delete(id) {
-    this.formationService.remove(id).subscribe( data => this.fetch());
+    this.onDelete.emit(id);
   }
 
-  fetch() {
-    this.formationService.fetch().subscribe(data => {
-      this.formations = data;
-    });
-  }
 }

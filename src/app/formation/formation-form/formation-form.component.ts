@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Formation } from '../../shared/models/formation';
 import { FormationService } from '../../shared/services/formation.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,8 +15,9 @@ export class FormationFormComponent implements OnInit, OnDestroy {
   formation: Formation;
   sub: Array<Subscription> = [];
   id: any;
+  formationFormRx: FormGroup;
   // formations: Array<Formation> = [];
-  constructor(private formationService: FormationService, private route: ActivatedRoute) {
+  constructor(private formationService: FormationService, private route: ActivatedRoute, private builder: FormBuilder) {
     const sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       if (this.id) {
@@ -30,7 +31,16 @@ export class FormationFormComponent implements OnInit, OnDestroy {
     this.formation = new Formation();
     this.formation.title = 'Wissem';
     this.formation.description = 'AKROUT';
+    this.initFormReactive();
   }
+
+  initFormReactive() {
+    this.formationFormRx = this.builder.group({
+      title: new FormControl('Wissem', Validators.required),
+      description: new FormControl()
+    });
+  }
+
 
   add(formationForm: NgForm) {
     console.log(formationForm.value);
@@ -49,6 +59,14 @@ export class FormationFormComponent implements OnInit, OnDestroy {
     }
 
     formationForm.reset();
+  }
+
+  addForm() {
+    console.log(this.formationFormRx.value);
+    console.log(this.formationFormRx.controls.title.value);
+    console.log(this.formationFormRx.controls.description.value);
+    // Add to db rest post
+
   }
 
   find(id) {

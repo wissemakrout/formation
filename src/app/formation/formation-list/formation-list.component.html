@@ -1,13 +1,21 @@
-<p>
-  formation-list works!
-</p>
-
 <pre>{{formations | json}}</pre>
-<ul>
-  <li *ngFor="let formation of formations">
-    <p>{{formation.title}}</p>
-    <p><a [routerLink]="['form', formation.id]">Details</a></p>
-     <p><a [routerLink]="['form', formation.id]">Update</a></p>
-     <p><a (click)="delete(formation.id)">Delete</a></p>
-  </li>
-</ul>
+<h1>Liste Des Formation</h1>
+<table class="table">
+    <th>TITLE</th>
+    <th>PRIX</th>
+    <th>ACTION</th>
+    <tr *ngFor="let formation of formations">
+      <td>
+        <p>{{formation.title}}</p>
+      </td>
+      <td>
+        <p>{{formation.id | currency}}</p>
+      </td>
+      <td>
+        <p><a [routerLink]="['form', formation.id]">Details</a></p>
+        <p><a [routerLink]="['form', formation.id]">Update</a></p>
+        <p><a (click)="delete(formation.id)">Delete</a></p>
+      </td>
+    </tr>
+
+</table>
